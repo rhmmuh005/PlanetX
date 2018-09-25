@@ -36,6 +36,7 @@ public class PlayerID : NetworkBehaviour {
             this.GetComponentInChildren<TextMesh>().text = PlayerName;
         }
 
+        
         /*
         if(myTransform.name == "" || myTransform.name == "PlayerCapsule(Clone)" || myTransform.name == "Robot(Clone)" || myTransform.name == "SciFiPlayer(Clone)")
         {
@@ -67,6 +68,7 @@ public class PlayerID : NetworkBehaviour {
 
     string MakeUniqueIdentity()
     {
+        //Debug.Log("make unique identity");
         string uniqueName = "Player " + PlayerNetID.ToString();
         return uniqueName;
     }

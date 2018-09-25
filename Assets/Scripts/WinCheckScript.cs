@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class WinCheckScript : MonoBehaviour {
+
+public class WinCheckScript : NetworkBehaviour {
     public GameObject[] gos;
     public int count;
     // Use this for initialization
@@ -26,7 +28,22 @@ public class WinCheckScript : MonoBehaviour {
             }
         }
         if (count == (gos.Length - 1))
+        {
+            CmdOnWinCondition();
+        }
             //Log to console that The is only one player left alive.
-            Debug.Log("winner");
+            //Debug.Log("winner");
+    }
+
+    [Command]
+    void CmdOnWinCondition()
+    {
+        RpcEndMatch();
+    }
+
+    [ClientRpc]
+    void RpcEndMatch()
+    {
+        Debug.Log("match winner found");
     }
 }

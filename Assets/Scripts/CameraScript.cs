@@ -11,6 +11,9 @@ public class CameraScript : MonoBehaviour {
     LocalHealth lh;
     Health h;
 
+    AmmoCounter ammoCounter;
+    WeaponReloader weaponReloader;
+
     [Range(0.1f, 1.0f)]
     public float SmoothFactor = 0.5f;
 
@@ -22,6 +25,9 @@ public class CameraScript : MonoBehaviour {
 
         lh = PlayerCamera.GetComponent<LocalHealth>();
         h = GetComponent<Health>();
+
+        ammoCounter = PlayerCamera.GetComponent<AmmoCounter>();
+        weaponReloader = GetComponent<WeaponReloader>();
     }
 	
 	// Update is called once per frame
@@ -33,5 +39,6 @@ public class CameraScript : MonoBehaviour {
     private void Update()
     {
         lh.updateHealthBar(h.health);
+        ammoCounter.updateAmmoCounter(weaponReloader);
     }
 }

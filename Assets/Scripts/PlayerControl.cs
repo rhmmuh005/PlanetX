@@ -9,7 +9,7 @@ public class PlayerControl : MonoBehaviour {
 
     private Vector3 moveInput;
     private Vector3 moveVelocity;
-     
+
     private Rigidbody playerRigidbody;
     private Camera mainCamera;
     Health player_health;
@@ -63,7 +63,6 @@ public class PlayerControl : MonoBehaviour {
 
     private void FixedUpdate()
     {
-
         playerRigidbody.velocity = moveVelocity;
     }
 

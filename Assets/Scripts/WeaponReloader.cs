@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class WeaponReloader : NetworkBehaviour {
+public class WeaponReloader : NetworkBehaviour
+{
 
     [SerializeField] int maxAmmo;
     [SerializeField] int clipSize;

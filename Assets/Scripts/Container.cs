@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Container : MonoBehaviour {
+public class Container : MonoBehaviour
+{
 
     [System.Serializable]
-	public class ContainerItem
+    public class ContainerItem
     {
         public System.Guid Id;
         public string Name;

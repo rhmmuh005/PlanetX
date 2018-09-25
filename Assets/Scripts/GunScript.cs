@@ -11,12 +11,13 @@ public class GunScript : NetworkBehaviour {
 
     public int damage = 10;
     public float range = 100;
-    public float impactForce = 80;
+    public float impactForce = 0;
 
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
 
     Health player_health;
+    public WinCheckScript wc;
 
     Animator animator;
     PlayerAnimation playerAnimation;
@@ -71,6 +72,9 @@ public class GunScript : NetworkBehaviour {
         if (Time.time < nextFireAllowed)
             return;
 
+        if (Time.time < nextFireAllowed)
+            return;
+
         if (reloader != null)
         {
             if (reloader.IsReloading)
@@ -89,16 +93,21 @@ public class GunScript : NetworkBehaviour {
         if(Physics.Raycast(transform.position, transform.forward, out hit, range))
         {
             //testing
-            //Debug.Log("Hit : "+hit.transform.name);
+            Debug.Log("Hit : "+hit.transform.name);
 
-            if(hit.transform.tag =="Player" || hit.transform.tag == "NPC")
+            if(hit.transform.tag =="Player")
             {
                 string uIdentity = hit.transform.name;
-                //Debug.Log(uIdentity + " was shot...");
+                CmdTellServerWhoWasShot(uIdentity, damage);
+                wc.CheckIfWin();
+            }
+            if (hit.transform.tag == "Enemy")
+            {
+                string uIdentity = hit.transform.name;
                 CmdTellServerWhoWasShot(uIdentity, damage);
             }
 
-            if(hit.rigidbody != null)
+            if (hit.rigidbody != null)
             {
                 hit.rigidbody.AddForce(-hit.normal * impactForce);
             }
@@ -107,7 +116,7 @@ public class GunScript : NetworkBehaviour {
         }
         else
         {
-            //Debug.Log("Miss");
+            Debug.Log("Miss");
         }
 
         canFire = true;

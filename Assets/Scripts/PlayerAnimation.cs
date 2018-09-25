@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerAnimation : NetworkBehaviour {
+public class PlayerAnimation : NetworkBehaviour
+{
 
     Animator animator;
     NetworkAnimator networkAnim;
@@ -16,7 +17,8 @@ public class PlayerAnimation : NetworkBehaviour {
     public bool canRoll = true;
 
     // Use this for initialization
-    void Awake () {
+    void Awake()
+    {
         animator = GetComponentInChildren<Animator>();
         networkAnim = GetComponent<NetworkAnimator>();
         playerHealth = GetComponent<Health>();
@@ -27,10 +29,11 @@ public class PlayerAnimation : NetworkBehaviour {
         animator.SetLayerWeight(animator.GetLayerIndex("Reloading"), 0);
         animator.SetLayerWeight(animator.GetLayerIndex("PickUp"), 0);
     }
-	
-	// Update is called once per frame
-	void Update () {
-        
+
+    // Update is called once per frame
+    void Update()
+    {
+
         if (!playerHealth.isDead)
         {
             PickUp();
