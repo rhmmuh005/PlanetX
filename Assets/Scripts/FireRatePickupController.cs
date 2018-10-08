@@ -17,9 +17,9 @@ public class FireRatePickupController : PickupController
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Player range incrases by " + this.amount);
             other.gameObject.GetComponent<GunScript>().addFireRate(amount);
