@@ -110,4 +110,9 @@ public class WeaponReloader : NetworkBehaviour
         yield return new WaitForSeconds(1f);
         animator.SetLayerWeight(animator.GetLayerIndex("Reloading"), 0);
     }
+
+    public void addAmmo(int amount)
+    {
+        inventory.addMoreAvailableItems(containerItemId, amount);
+    }
 }

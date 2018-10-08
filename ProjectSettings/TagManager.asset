@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - NPC
+  - Enemy
+  - Waypoint
   layers:
   - Default
   - TransparentFX
@@ -15,9 +16,9 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
+  - PlayerLayer
+  - Minimap
+  - Level
   - 
   - 
   - 

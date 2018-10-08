@@ -13,6 +13,10 @@ public class GunScript : NetworkBehaviour {
     public float range = 100;
     public float impactForce = 0;
 
+    public AudioSource AS;
+    public AudioClip FireSound;
+
+
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
 
@@ -31,7 +35,7 @@ public class GunScript : NetworkBehaviour {
         animator = GetComponentInChildren<Animator>();
         playerAnimation = GetComponent<PlayerAnimation>();
         reloader = GetComponent<WeaponReloader>();
-
+        AS.clip = FireSound;
         player_health = GetComponent<Health>();
 
         input_controller = GetComponent<InputController>();
@@ -99,7 +103,8 @@ public class GunScript : NetworkBehaviour {
             {
                 string uIdentity = hit.transform.name;
                 CmdTellServerWhoWasShot(uIdentity, damage);
-                wc.CheckIfWin();
+                //wc.CheckIfWin();
+
             }
             if (hit.transform.tag == "Enemy")
             {
@@ -127,6 +132,9 @@ public class GunScript : NetworkBehaviour {
     {
         GameObject go = GameObject.Find(UniqueID);
         go.GetComponent<Health>().TakeDamage(dmg);
+
+        if(go.tag == "Player")
+            go.GetComponent<WinCheckScript>().CheckIfWin();
     }
 
     [Command]
@@ -139,6 +147,10 @@ public class GunScript : NetworkBehaviour {
     void RpcDoShootEffect()
     {
         muzzleFlash.Play();
+
+        Debug.Log(gameObject.name +" Play shoot sound");
+        
+        AS.Play();
     }
 
     [Command]
@@ -152,5 +164,17 @@ public class GunScript : NetworkBehaviour {
     {
         GameObject impactGO = Instantiate(impactEffect, _pos, Quaternion.LookRotation(_normal));
         Destroy(impactGO, 2f);
+    }
+
+    public void addRange(int amount)
+    {
+        this.range += amount;
+    }
+
+    public void addFireRate(int amount)
+    {
+        float newRate = this.rateOfFire - (amount / 100);
+        if (newRate < 0.05) newRate = 0.05f;
+        this.rateOfFire = newRate;
     }
 }

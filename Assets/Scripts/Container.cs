@@ -36,6 +36,20 @@ public class Container : MonoBehaviour
             }
         }
 
+        public void ReduceAmountTaken(int amount)
+        {
+            int newAmountTaken = amountTaken - amount;
+
+            if (newAmountTaken < 0)
+            {
+                amountTaken = 0;
+            }
+            else
+            {
+                amountTaken = newAmountTaken;
+            }
+        }
+
         public int Get(int value)
         {
             if ((amountTaken + value) > Maximum)
@@ -93,5 +107,12 @@ public class Container : MonoBehaviour
         var containerItem = items.Where(x => x.Id == id).FirstOrDefault();
 
         return containerItem;
+    }
+
+    public void addMoreAvailableItems(System.Guid id, int amount)
+    {
+        var containerItem = GetContainerItem(id);
+
+        containerItem.ReduceAmountTaken(amount);
     }
 }

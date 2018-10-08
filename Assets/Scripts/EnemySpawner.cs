@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class EnemySpawner : NetworkBehaviour {
+public class EnemySpawner : NetworkBehaviour
+{
 
     public GameObject enemyPrefab;
     public int numberOfEnemies;
@@ -20,9 +21,4 @@ public class EnemySpawner : NetworkBehaviour {
             NetworkServer.Spawn(enemy);
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

@@ -16,13 +16,14 @@ public class MainMenu : MonoBehaviour {
     // Use this for initialization
     void Start () {
         index = 0;
-        image.sprite = sprites[0];
+        if(sprites.Length!=0)
+            image.sprite = sprites[0];
         strings = new string[3];
-        strings[0] = "Left Click to shoot";
-        strings[1] = "Point in direction you want to face with  mouse";
-        strings[2] = "Press w to walk forward, hold shift to run. While running you can press shift roll";
+        strings[0] = "Point in direction you want to face with  mouse. Press w to walk forward, hold shift to run.";
+        strings[1] = "While running you can press Space roll.";
+        strings[2] = "Left Click to shoot.";
         
-
+        if(text!=null)
         text.SetText(0 + 1 + "/" + sprites.Length + " " + strings[0]);
     }
 	

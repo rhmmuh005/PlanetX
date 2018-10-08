@@ -29,7 +29,12 @@ public class WinCheckScript : NetworkBehaviour {
         }
         if (count == (gos.Length - 1))
         {
-            CmdOnWinCondition();
+            if(hasAuthority)
+            {
+                RpcEndMatch();
+            }
+            else
+                CmdOnWinCondition();
         }
             //Log to console that The is only one player left alive.
             //Debug.Log("winner");
@@ -44,6 +49,18 @@ public class WinCheckScript : NetworkBehaviour {
     [ClientRpc]
     void RpcEndMatch()
     {
-        Debug.Log("match winner found");
+        if(gameObject.GetComponent<Health>().health <= 10 && isLocalPlayer)
+        {
+            gameObject.GetComponent<CameraScript>().PlayerCamera.GetComponent<LocalHealth>().updateWinPanel("Wasted");
+            Debug.Log(gameObject.name+" You Lost");
+            Debug.Log(gameObject.GetComponent<Health>().health+ " Health");
+        }
+        else if(gameObject.GetComponent<Health>().health <= 10)
+        {
+            Debug.Log(gameObject.name +" You Win");
+            Debug.Log(gameObject.GetComponent<Health>().health + " Health");
+
+            gameObject.GetComponent<CameraScript>().PlayerCamera.GetComponent<LocalHealth>().updateWinPanel("You Win");
+        }
     }
 }

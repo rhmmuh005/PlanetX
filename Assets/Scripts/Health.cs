@@ -26,8 +26,10 @@ public class Health : NetworkBehaviour {
         if (health <= 0)
             health = 0;
 
+        /*if(gameObject.tag == "Player")
+            ws.CheckIfWin();*/
         //check if there is only one player left alive
-        
+
         /*
         if (health <= 0 && !isDead)
         {
@@ -41,8 +43,5 @@ public class Health : NetworkBehaviour {
     {
         health = h;
         healthBar.sizeDelta = new Vector2(health, healthBar.sizeDelta.y);
-
-        if (isLocalPlayer)
-            ws.CheckIfWin();
     }
 }

@@ -403,7 +403,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 372382280088bf4439413c14401fba76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
+  waypoints: []
+  patrolSpeed: 10
+  chaseSpeed: 15
+  target: {fileID: 0}
   agent: {fileID: 195084627888521298}
+  pickups:
+  - {fileID: 1365250044268940, guid: 19e0f236bd3f3e043bbb376651f55375, type: 2}
 --- !u!114 &114399437816186948
 MonoBehaviour:
   m_ObjectHideFlags: 1

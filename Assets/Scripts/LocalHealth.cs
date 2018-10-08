@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class LocalHealth : MonoBehaviour {
 
     public Image healthbar;// = go.GetComponent<SpriteRenderer>().sprite;
     public Text ratiotext;
+    public TextMeshProUGUI wintext;
+
 
     float maxHP = 100;
 
@@ -26,5 +29,10 @@ public class LocalHealth : MonoBehaviour {
         float ratio = h/maxHP;
         healthbar.rectTransform.localScale = new Vector3(ratio, 1, 1);
         ratiotext.text = (ratio * 100).ToString() + '%';
+    }
+
+    public void updateWinPanel(string s)
+    {
+        wintext.SetText(s);
     }
 }
