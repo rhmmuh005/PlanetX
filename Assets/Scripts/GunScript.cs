@@ -11,7 +11,7 @@ public class GunScript : NetworkBehaviour {
 
     public int damage = 10;
     public float range = 100;
-    public float impactForce = 0;
+    public float impactForce = 80;
 
     public AudioSource AS;
     public AudioClip FireSound;
@@ -30,6 +30,8 @@ public class GunScript : NetworkBehaviour {
     float nextFireAllowed;
     InputController input_controller;
 
+    LineRenderer line;
+
 	// Use this for initialization
 	void Start () {
         animator = GetComponentInChildren<Animator>();
@@ -39,17 +41,29 @@ public class GunScript : NetworkBehaviour {
         player_health = GetComponent<Health>();
 
         input_controller = GetComponent<InputController>();
+
+        line = GetComponentInChildren<LineRenderer>();
+        line.enabled = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(input_controller.Fire1 && playerAnimation.canShoot && !(input_controller.IsRunning) && !(input_controller.IsPickUp))
+		if (input_controller.Fire1 && playerAnimation.canShoot && !(input_controller.IsRunning) && !(input_controller.IsPickUp))
         {
+            //this.GetComponent<PlayerList>().UpdateText();
             if (animator.GetLayerWeight(animator.GetLayerIndex("Reloading")) == 0)
             {
                 if (!(player_health.isDead))
+                {
                     CmdShoot();
+                    line.enabled = true;
+                }
             }
+        }
+
+        else
+        {
+            line.enabled = false;
         }
 
         if (input_controller.IsReloading && !(input_controller.IsRunning))
@@ -72,6 +86,7 @@ public class GunScript : NetworkBehaviour {
     void CmdShoot()
     {
         canFire = false;
+        //line.enabled = true;
 
         if (Time.time < nextFireAllowed)
             return;
@@ -125,6 +140,7 @@ public class GunScript : NetworkBehaviour {
         }
 
         canFire = true;
+        //line.enabled = false;
     }
 
     [Command]
@@ -147,6 +163,7 @@ public class GunScript : NetworkBehaviour {
     void RpcDoShootEffect()
     {
         muzzleFlash.Play();
+        //line.enabled = true;
 
         Debug.Log(gameObject.name +" Play shoot sound");
         
