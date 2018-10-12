@@ -115,4 +115,11 @@ public class WeaponReloader : NetworkBehaviour
     {
         inventory.addMoreAvailableItems(containerItemId, amount);
     }
+
+    public void increaseClipSize(int amount)
+    {
+        this.clipSize += amount;
+        this.addAmmo(clipSize - shotsFiredInClip);
+        this.shotsFiredInClip = 0;
+    }
 }

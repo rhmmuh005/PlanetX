@@ -21,8 +21,8 @@ public class RangePickupController : PickupController
     {
         if (other.tag == "Player" && Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Player range incrases by " + this.amount);
-            other.gameObject.GetComponent<GunScript>().addRange(amount);
+            Debug.Log("Player clip size incrases by " + this.amount);
+            other.gameObject.GetComponent<WeaponReloader>().increaseClipSize(amount);
             PickupSpawner.Destroy(this.gameObject);
         }
     }

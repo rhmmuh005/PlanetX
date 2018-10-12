@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 
 public class WinCheckScript : NetworkBehaviour {
-    public GameObject[] players;
+    public GameObject[] gos;
     public int count;
     // Use this for initialization
     void Start () {
@@ -19,23 +19,29 @@ public class WinCheckScript : NetworkBehaviour {
     public void CheckIfWin()
     {
         count = 0;
-        players = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < players.Length; i++)
+        gos = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < gos.Length; i++)
         {
-            if (!players[i].GetComponent<Health>().isDead)
+            if (gos[i].GetComponent<Health>().health <= 0)
             {
                 count++;
             }
         }
-        if (count <= 1)
-            CmdOnWinCondition();
-        else
-            Debug.Log("Players Alive: " + count);
+        if (count == (gos.Length - 1))
+        {
+            if(hasAuthority)
+            {
+                RpcEndMatch();
+            }
+            else
+                CmdOnWinCondition();
+        }
+            //Log to console that The is only one player left alive.
+            //Debug.Log("winner");
     }
 
-
     [Command]
-    public void CmdOnWinCondition()
+    void CmdOnWinCondition()
     {
         RpcEndMatch();
     }
@@ -43,13 +49,13 @@ public class WinCheckScript : NetworkBehaviour {
     [ClientRpc]
     void RpcEndMatch()
     {
-        if(gameObject.GetComponent<Health>().health <= 0 && isLocalPlayer)
+        if(gameObject.GetComponent<Health>().health <= 7 && isLocalPlayer)
         {
             gameObject.GetComponent<CameraScript>().PlayerCamera.GetComponent<LocalHealth>().updateWinPanel("Wasted");
             Debug.Log(gameObject.name+" You Lost");
             Debug.Log(gameObject.GetComponent<Health>().health+ " Health");
         }
-        else if(gameObject.GetComponent<Health>().health <= 0)
+        else if(gameObject.GetComponent<Health>().health <= 7)
         {
             Debug.Log(gameObject.name +" You Win");
             Debug.Log(gameObject.GetComponent<Health>().health + " Health");
