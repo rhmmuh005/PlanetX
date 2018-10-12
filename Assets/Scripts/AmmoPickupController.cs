@@ -14,9 +14,9 @@ public class AmmoPickupController : PickupController {
 		
 	}
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Player gets " + this.amount + "ammp");
             other.gameObject.GetComponent<WeaponReloader>().addAmmo(amount);

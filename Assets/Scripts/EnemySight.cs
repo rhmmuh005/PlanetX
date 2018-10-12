@@ -11,7 +11,8 @@ public class EnemySight : MonoBehaviour
         IDLE,
         CHASE,
         PATROL,
-        INVESTIGATE
+        INVESTIGATE,
+        ATTACK
     }
 
     public State currentState;
@@ -37,6 +38,14 @@ public class EnemySight : MonoBehaviour
     //Pickups
     public GameObject[] pickups;
 
+
+    //Attack
+    public float attackRange = 5.0f;
+    public int attackDamage = 7;
+    private float nextFireAllowed;
+    private float attackRate = 0.25f;
+    public Animation attackAnimation;
+
     Animator animator;
 
     public NavMeshAgent agent;
@@ -57,6 +66,9 @@ public class EnemySight : MonoBehaviour
         currentState = State.PATROL;
 
         heightMultiplier = 0.9f;
+
+        nextFireAllowed = Time.fixedTime;
+
     }
 
     // Update is called once per frame
@@ -72,6 +84,9 @@ public class EnemySight : MonoBehaviour
                     break;
                 case State.CHASE:
                     Chase();
+                    break;
+                case State.ATTACK:
+                    Attack();
                     break;
             }
         }
@@ -109,18 +124,37 @@ public class EnemySight : MonoBehaviour
     void Chase()
     {
         timer += Time.deltaTime;
-
-        if (timer <= investigateWait)
+        if (target.gameObject.GetComponent<Health>().isDead || (timer > investigateWait))
+        {
+            currentState = State.PATROL;
+            timer = 0;
+        }
+        else
         {
             animator.SetBool("IsRunning", true);
             agent.speed = chaseSpeed;
             agent.SetDestination(target.transform.position);
         }
+    }
 
+    void Attack()
+    {
+        Vector3 directionToTarget = target.transform.position - this.transform.position;
+        float dSqrToTarget = directionToTarget.sqrMagnitude;
+        if (dSqrToTarget > attackRange || target.GetComponent<Health>().isDead)
+        {
+            currentState = State.CHASE;
+        }
         else
         {
-            currentState = State.PATROL;
-            timer = 0;
+            if (Time.time < nextFireAllowed)
+                return;
+
+            agent.SetDestination(target.transform.position);
+            target.gameObject.GetComponent<Health>().TakeDamage(this.attackDamage);
+            target.gameObject.GetComponent<WinCheckScript>().CheckIfWin();
+            animator.SetTrigger("IsAttacking");
+            nextFireAllowed = Time.time + attackRate;
         }
     }
 
@@ -130,6 +164,14 @@ public class EnemySight : MonoBehaviour
         Debug.DrawRay(transform.position + Vector3.up * heightMultiplier, transform.forward * sightDist, Color.red);
         Debug.DrawRay(transform.position + Vector3.up * heightMultiplier, (transform.forward + transform.right).normalized * sightDist, Color.red);
         Debug.DrawRay(transform.position + Vector3.up * heightMultiplier, (transform.forward - transform.right).normalized * sightDist, Color.red);
+
+        players = GameObject.FindGameObjectsWithTag("Player");
+        closestPlayer = GetPlayerIfInAttackRange(players, attackRange);
+        if (closestPlayer != null)
+        {
+            currentState = State.ATTACK;
+            target = closestPlayer.gameObject;
+        }
 
         if (Physics.Raycast(transform.position + Vector3.up * heightMultiplier, transform.forward, out hit, sightDist))
         {
@@ -158,6 +200,28 @@ public class EnemySight : MonoBehaviour
             }
         }
     }
+
+    Transform GetPlayerIfInAttackRange(GameObject[] enemies, float attackRange)
+    {
+        Transform bestTarget = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+        Transform currentTarget;
+        foreach (GameObject potentialTarget in enemies)
+        {
+            currentTarget = potentialTarget.transform;
+            Vector3 directionToTarget = currentTarget.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if (dSqrToTarget < closestDistanceSqr && dSqrToTarget < attackRange)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                bestTarget = currentTarget;
+            }
+        }
+
+        return bestTarget;
+    }
+
 
     private void SpawnPickup()
     {
