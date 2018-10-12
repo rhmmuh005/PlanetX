@@ -42,7 +42,7 @@ public class EnemySight : MonoBehaviour
     //Attack
     public float attackRange = 5.0f;
     public int attackDamage = 7;
-    private float nextFireAllowed;
+    private float nextAttackAllowed;
     private float attackRate = 0.25f;
     public Animation attackAnimation;
 
@@ -67,7 +67,7 @@ public class EnemySight : MonoBehaviour
 
         heightMultiplier = 0.9f;
 
-        nextFireAllowed = Time.fixedTime;
+        nextAttackAllowed = Time.fixedTime;
 
     }
 
@@ -147,14 +147,13 @@ public class EnemySight : MonoBehaviour
         }
         else
         {
-            if (Time.time < nextFireAllowed)
+            if (Time.time < nextAttackAllowed)
                 return;
 
             agent.SetDestination(target.transform.position);
             target.gameObject.GetComponent<Health>().TakeDamage(this.attackDamage);
-            target.gameObject.GetComponent<WinCheckScript>().CheckIfWin();
             animator.SetTrigger("IsAttacking");
-            nextFireAllowed = Time.time + attackRate;
+            nextAttackAllowed = Time.time + attackRate;
         }
     }
 

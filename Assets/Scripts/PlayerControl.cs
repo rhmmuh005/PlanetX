@@ -37,6 +37,8 @@ public class PlayerControl : MonoBehaviour {
 
         else
         {
+            moveVelocity = new Vector3(0, 0, 0);
+            GetComponent<WinCheckScript>().CheckIfWin();
             playerRigidbody.isKinematic = false;
         }
 	}
