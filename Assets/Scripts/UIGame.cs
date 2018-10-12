@@ -15,7 +15,7 @@ public class UIGame : MonoBehaviour {
 	void Update () {
 		if(Input.GetKey(KeyCode.F))
         {
-            Debug.Log("working");
+            //Debug.Log("working");
             t.gameObject.SetActive(true);
         }
         else
