@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Container : MonoBehaviour
 {
-
+    // container class for inventory system
     [System.Serializable]
     public class ContainerItem
     {
@@ -15,11 +15,13 @@ public class Container : MonoBehaviour
 
         public int amountTaken;
 
+        // creates a new container item
         public ContainerItem()
         {
             Id = System.Guid.NewGuid();
         }
 
+        // amount left in the container
         public int Remaining
         {
             get
@@ -28,6 +30,7 @@ public class Container : MonoBehaviour
             }
         }
 
+        // return amount taken
         public int GetAmountTaken
         {
             get
@@ -36,6 +39,7 @@ public class Container : MonoBehaviour
             }
         }
 
+        // reduce the amount taken from the container
         public void ReduceAmountTaken(int amount)
         {
             int newAmountTaken = amountTaken - amount;
@@ -71,6 +75,7 @@ public class Container : MonoBehaviour
         items = new List<ContainerItem>();
     }
 
+    // add a new container item with elements
     public System.Guid Add(string name, int maximum)
     {
         items.Add(new ContainerItem
@@ -82,6 +87,7 @@ public class Container : MonoBehaviour
         return items.Last().Id;
     }
 
+    // take elements from container
     public int TakeFromContainer(System.Guid id, int amount)
     {
         var containerItem = GetContainerItem(id);
@@ -92,6 +98,7 @@ public class Container : MonoBehaviour
         return containerItem.Get(amount);
     }
 
+    // return amount remaining
     public int GetAmountRemaining(System.Guid id)
     {
         var containerItem = GetContainerItem(id);
@@ -109,6 +116,7 @@ public class Container : MonoBehaviour
         return containerItem;
     }
 
+    // add more available items
     public void addMoreAvailableItems(System.Guid id, int amount)
     {
         var containerItem = GetContainerItem(id);

@@ -11,19 +11,23 @@ public class LocalHealth : MonoBehaviour {
     public Text ratiotext;
     public TextMeshProUGUI wintext;
 
+    //used to link the playerlist text to the player list script on the player.
+    public Text playerList;
+
 
     float maxHP = 100;
 
 	// Use this for initialization
 	void Start () {
-        //updateHealthBar();
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
-       // updateHealthBar();
 	}
 
+
+    //show health in local HUD healthbar
     public void updateHealthBar(float h)
     {
         float ratio = h/maxHP;

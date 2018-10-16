@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class minimap : MonoBehaviour {
-    
+    //script to move minimap camera
     public Camera cam;
     private void Start()
     {

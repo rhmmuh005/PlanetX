@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraScript : MonoBehaviour {
 
@@ -8,11 +9,16 @@ public class CameraScript : MonoBehaviour {
     private Vector3 _CameraOffset;
     public Camera PlayerCamera;
 
+    // Local Health object
     LocalHealth lh;
+
+    // Health Object
     Health h;
 
+    // Ammo counter object
     AmmoCounter ammoCounter;
-    PlayerList pl;
+
+    // Weapon Reloader object
     WeaponReloader weaponReloader;
 
     [Range(0.1f, 1.0f)]
@@ -28,20 +34,22 @@ public class CameraScript : MonoBehaviour {
         h = GetComponent<Health>();
 
         ammoCounter = PlayerCamera.GetComponent<AmmoCounter>();
-        pl = PlayerCamera.GetComponent<PlayerList>();
         weaponReloader = GetComponent<WeaponReloader>();
     }
 	
 	// Update is called once per frame
 	void LateUpdate () {
+        // having the camera follow the player
         Vector3 newPos = playerTransform.position + _CameraOffset;
 
         PlayerCamera.transform.position = Vector3.Slerp(PlayerCamera.transform.position, newPos, SmoothFactor);
 	}
+
+    // updates the UI for health bar (remaining health) and ammo counter (remaining ammo)
     private void Update()
     {
         lh.updateHealthBar(h.health);
         ammoCounter.updateAmmoCounter(weaponReloader);
-        pl.UpdateText();
+        
     }
 }

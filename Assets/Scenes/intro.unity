@@ -252,6 +252,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a68a75fcb858fb44aaa1de1453d014f7, type: 3}
   - {fileID: 21300000, guid: 983d10d4d84c7b4458a5a4dac711c46f, type: 3}
   - {fileID: 21300000, guid: f64e7d37af651444faf76ac1c420b427, type: 3}
+  - {fileID: 21300000, guid: 270d2b82335e4634f9da9cbb16c0ce4f, type: 3}
   image: {fileID: 656229109}
   text: {fileID: 265058931}
   t: {fileID: 391056395}

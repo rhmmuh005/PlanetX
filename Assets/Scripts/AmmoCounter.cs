@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class AmmoCounter : MonoBehaviour {
 
+    // Text object
     [SerializeField] Text text;
 
+    // weapon reloader
     private WeaponReloader reloader;
 
+    // ammo counter update to keep track of how much ammo is left
     public void updateAmmoCounter(WeaponReloader reloader)
     {
         int amountInInventory = reloader.RoundsRemainingInInventory;

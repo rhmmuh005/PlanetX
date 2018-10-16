@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PickupController : MonoBehaviour {
-
+    //simple class for pickups/items
     public enum PickupType
     {
         AMMO,

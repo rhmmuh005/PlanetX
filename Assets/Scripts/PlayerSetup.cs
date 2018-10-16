@@ -5,7 +5,8 @@ public class PlayerSetup : NetworkBehaviour {
 
     [SerializeField]
     Behaviour[] componentsToDisable;
-
+    //disables components that should only be running for local player.
+    //applied to non-local player on local client
 
     private void Start()
     {

@@ -1086,7 +1086,6 @@ GameObject:
   - component: {fileID: 114834313534877106}
   - component: {fileID: 114664562529510172}
   - component: {fileID: 114723149269239164}
-  - component: {fileID: 114834426780339970}
   - component: {fileID: 114788378626189992}
   - component: {fileID: 114627504533451802}
   - component: {fileID: 82460678274970586}
@@ -2938,7 +2937,7 @@ MonoBehaviour:
   muzzleFlash: {fileID: 198614250423528960}
   impactEffect: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd,
     type: 2}
-  wc: {fileID: 114834426780339970}
+  wc: {fileID: 0}
 --- !u!114 &114211737076058226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2952,6 +2951,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 224696958588342096}
   isDead: 0
+  gos: []
   health: 100
 --- !u!114 &114323784526986634
 MonoBehaviour:
@@ -3199,7 +3199,6 @@ MonoBehaviour:
   - {fileID: 114065209478047672}
   - {fileID: 114323784526986634}
   - {fileID: 114923520895539330}
-  - {fileID: 114834426780339970}
   - {fileID: 114788378626189992}
 --- !u!114 &114834313534877106
 MonoBehaviour:
@@ -3220,19 +3219,6 @@ MonoBehaviour:
   param3: 
   param4: 
   param5: 
---- !u!114 &114834426780339970
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1949891992398842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f68a06145c34e54f898cb75b552e4c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gos: []
-  count: 0
 --- !u!114 &114852028417114206
 MonoBehaviour:
   m_ObjectHideFlags: 1

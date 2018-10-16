@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemySight : MonoBehaviour
 {
-
+    // Enum for different states
     public enum State
     {
         IDLE,
@@ -18,6 +18,8 @@ public class EnemySight : MonoBehaviour
     public State currentState;
 
     // Patrol
+
+    // array of a set of waypoints
     public GameObject[] waypoints;
     private int waypointInd;
     public float patrolSpeed = 3.0f;
@@ -42,12 +44,13 @@ public class EnemySight : MonoBehaviour
     //Attack
     public float attackRange = 5.0f;
     public int attackDamage = 7;
-    private float nextFireAllowed;
+    private float nextAttackAllowed;
     private float attackRate = 0.25f;
     public Animation attackAnimation;
 
     Animator animator;
 
+    // NavMesh object for enemy
     public NavMeshAgent agent;
 
     GameObject[] players;
@@ -67,7 +70,7 @@ public class EnemySight : MonoBehaviour
 
         heightMultiplier = 0.9f;
 
-        nextFireAllowed = Time.fixedTime;
+        nextAttackAllowed = Time.fixedTime;
 
     }
 
@@ -98,10 +101,13 @@ public class EnemySight : MonoBehaviour
             animator.SetTrigger("IsDead");
             this.transform.GetComponent<Health>().isDead = true;
             Debug.Log("Enemy is dieing...");
+            GameObject destroyEnemy = this.transform.gameObject;
+            Destroy(destroyEnemy, 2f);
             SpawnPickup();
         }
     }
 
+    // Patrol method that makes enemy walk to different waypoints
     void Patrol()
     {
         agent.speed = patrolSpeed;
@@ -121,6 +127,7 @@ public class EnemySight : MonoBehaviour
         }
     }
 
+    // chase method that makes enemy follow closest player
     void Chase()
     {
         timer += Time.deltaTime;
@@ -137,6 +144,7 @@ public class EnemySight : MonoBehaviour
         }
     }
 
+    // enemy attacks player if he/she is in a certain range
     void Attack()
     {
         Vector3 directionToTarget = target.transform.position - this.transform.position;
@@ -147,17 +155,17 @@ public class EnemySight : MonoBehaviour
         }
         else
         {
-            if (Time.time < nextFireAllowed)
+            if (Time.time < nextAttackAllowed)
                 return;
 
             agent.SetDestination(target.transform.position);
             target.gameObject.GetComponent<Health>().TakeDamage(this.attackDamage);
-            target.gameObject.GetComponent<WinCheckScript>().CheckIfWin();
             animator.SetTrigger("IsAttacking");
-            nextFireAllowed = Time.time + attackRate;
+            nextAttackAllowed = Time.time + attackRate;
         }
     }
 
+    // enemies use raycast as a sight to view the world and notice players
     private void FixedUpdate()
     {
         RaycastHit hit;
@@ -201,6 +209,7 @@ public class EnemySight : MonoBehaviour
         }
     }
 
+    // enemies find players who are in an attack range and can thus launch attacks
     Transform GetPlayerIfInAttackRange(GameObject[] enemies, float attackRange)
     {
         Transform bestTarget = null;
@@ -222,10 +231,9 @@ public class EnemySight : MonoBehaviour
         return bestTarget;
     }
 
-
+    // pick up is spawned at the same position where enemy died
     private void SpawnPickup()
     {
-        
         GameObject toSpawn = Instantiate(pickups[Random.Range(0, 2)], this.transform.position, this.transform.rotation);
         Debug.Log("Spawn Pickup");
         PickupSpawner.spawn(toSpawn);

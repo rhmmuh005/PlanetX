@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 public class PlayerID : NetworkBehaviour {
-
+    //creates a unique userID for each player so damage can be applied to player using this name.
     [SyncVar] public string PlayerUniqueName;
 
     [SyncVar]

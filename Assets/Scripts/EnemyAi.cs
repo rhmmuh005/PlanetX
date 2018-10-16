@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyAi : MonoBehaviour {
 
+    // Enum for different states
     public enum State
     {
         IDLE,
@@ -14,6 +15,7 @@ public class EnemyAi : MonoBehaviour {
 
     public State currentState;
 
+    // array of a set of waypoints
     public GameObject[] waypoints;
     private int waypointInd;
     public float patrolSpeed = 10.0f;
@@ -23,13 +25,13 @@ public class EnemyAi : MonoBehaviour {
 
     Animator animator;
 
+    // NavMesh object for enemy
     public NavMeshAgent agent;
     public GameObject[] pickups;
 
     GameObject[] players;
     Transform closestPlayer;
     Health NPChealth;
-
 
 	// Use this for initialization
 	void Start () {
@@ -42,30 +44,10 @@ public class EnemyAi : MonoBehaviour {
 
         currentState = State.PATROL;
 
-
-        //StartCoroutine(FSM());
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        /*
-        players = GameObject.FindGameObjectsWithTag("Player");
-        closestPlayer = GetClosestEnemy(players);
-
-        if (NPChealth.health > 0 && closestPlayer != null)
-        {
-            agent.SetDestination(closestPlayer.position);
-        }
-
-        else
-        {
-            if (this.transform.GetComponent<Health>().health <= 0)
-            {
-                agent.enabled = false;
-                NPCDestroy();
-            }
-        }
-        */
 
         if (this.transform.GetComponent<Health>().health > 0)
         {
@@ -92,27 +74,7 @@ public class EnemyAi : MonoBehaviour {
         }
     }
 
-    /*
-    IEnumerator FSM()
-    {
-        while (this.transform.GetComponent<Health>().health > 0)
-        {
-            switch (currentState)
-            {
-                case State.PATROL:
-                    animator.SetBool("IsWalking", true);
-                    Patrol();
-                    break;
-                case State.CHASE:
-                    Chase();
-                    break;
-            }
-
-            yield return null;
-        }
-    }
-    */
-
+    // Patrol method that makes enemy walk to different waypoints
     void Patrol()
     {
         agent.speed = patrolSpeed;
@@ -132,6 +94,7 @@ public class EnemyAi : MonoBehaviour {
         }
     }
 
+    // chase method that makes enemy follow closest player
     void Chase()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
@@ -147,6 +110,7 @@ public class EnemyAi : MonoBehaviour {
         agent.SetDestination(closestPlayer.position);
     }
 
+    // enemy finds the closest enemy and sets him as a potential target
     Transform GetClosestEnemy(GameObject[] enemies)
     {
         Transform bestTarget = null;
@@ -168,6 +132,7 @@ public class EnemyAi : MonoBehaviour {
         return bestTarget;
     }
 
+    // pick up is spawned at the same position where enemy died
     private void SpawnPickup()
     {
         GameObject toSpawn = Instantiate(pickups[0], this.transform.position, this.transform.rotation);

@@ -21,7 +21,7 @@ public class GunScript : NetworkBehaviour {
     public GameObject impactEffect;
 
     Health player_health;
-    public WinCheckScript wc;
+    //ublic WinCheckScript wc;
 
     Animator animator;
     PlayerAnimation playerAnimation;
@@ -125,6 +125,9 @@ public class GunScript : NetworkBehaviour {
             {
                 string uIdentity = hit.transform.name;
                 CmdTellServerWhoWasShot(uIdentity, damage);
+
+                hit.transform.LookAt(transform.position, Vector3.up);
+                hit.transform.position = Vector3.Lerp(hit.transform.position, transform.position, 0.01f);
             }
 
             if (hit.rigidbody != null)
@@ -149,8 +152,8 @@ public class GunScript : NetworkBehaviour {
         GameObject go = GameObject.Find(UniqueID);
         go.GetComponent<Health>().TakeDamage(dmg);
 
-        if(go.tag == "Player")
-            go.GetComponent<WinCheckScript>().CheckIfWin();
+        /*if(go.tag == "Player")
+            go.GetComponent<WinCheckScript>().CheckIfWin();*/
     }
 
     [Command]

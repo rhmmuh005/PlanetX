@@ -38,9 +38,11 @@ public class PlayerControl : MonoBehaviour {
         else
         {
             playerRigidbody.isKinematic = false;
+            moveVelocity = new Vector3(0, 0, 0);
         }
 	}
 
+    //this function handles the movement of the player
     void Move()
     {
         if(playerInput == null)
@@ -66,6 +68,8 @@ public class PlayerControl : MonoBehaviour {
         playerRigidbody.velocity = moveVelocity;
     }
 
+
+    //this function handles the rotation of the player
     private void point()
     {
         Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
