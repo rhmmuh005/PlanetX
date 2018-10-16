@@ -6,10 +6,7 @@ using UnityEngine.Networking;
 
 public class EnemySpawner : NetworkBehaviour
 {
-<<<<<<< HEAD
     // set of spawn points stored in an array to spawn enemies at these locations
-=======
->>>>>>> master
     public GameObject[] spawnPoints;
     public GameObject enemyPrefab;
     public int numberOfEnemies;
@@ -47,7 +44,6 @@ public class EnemySpawner : NetworkBehaviour
     // 
     public override void OnStartServer()
     {
-<<<<<<< HEAD
         textObject = GameObject.Find("WaveNumber");
         if (textObject)
         {
@@ -57,15 +53,6 @@ public class EnemySpawner : NetworkBehaviour
 
         if (spawnPoints.Length == 0)
         {
-=======
-        spawnPoints = GameObject.FindGameObjectsWithTag("Waypoint");
-        int startPoint = Random.Range(0, spawnPoints.Length);
-        for (int i = 0; i < numberOfEnemies; i++)
-        {
-            int num = i + startPoint;
-            if (num > spawnPoints.Length - 1) num -= spawnPoints.Length;
-            var spawnPosition = spawnPoints[num].transform.position + new Vector3(Random.Range(-2.0f, 2.0f), 0.0f, Random.Range(-2.0f, 2.0f));
->>>>>>> master
 
         }
 

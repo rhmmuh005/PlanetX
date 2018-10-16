@@ -12,10 +12,7 @@ public class UIGame : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-<<<<<<< HEAD
     //simply used to show a panel with players who are alive.
-=======
->>>>>>> master
 	void Update () {
 		if(Input.GetKey(KeyCode.F))
         {

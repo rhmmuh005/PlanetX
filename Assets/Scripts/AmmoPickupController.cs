@@ -14,10 +14,7 @@ public class AmmoPickupController : PickupController {
 		
 	}
 
-<<<<<<< HEAD
     // player must stand on the ammo pick up and press E to be able to pick up the ammo
-=======
->>>>>>> master
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player" && Input.GetKeyDown(KeyCode.E))
