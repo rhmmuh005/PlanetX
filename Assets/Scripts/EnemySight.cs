@@ -144,7 +144,10 @@ public class EnemySight : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     // enemy attacks player if he/she is in a certain range
+=======
+>>>>>>> master
     void Attack()
     {
         Vector3 directionToTarget = target.transform.position - this.transform.position;
@@ -209,7 +212,10 @@ public class EnemySight : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     // enemies find players who are in an attack range and can thus launch attacks
+=======
+>>>>>>> master
     Transform GetPlayerIfInAttackRange(GameObject[] enemies, float attackRange)
     {
         Transform bestTarget = null;
@@ -231,7 +237,11 @@ public class EnemySight : MonoBehaviour
         return bestTarget;
     }
 
+<<<<<<< HEAD
     // pick up is spawned at the same position where enemy died
+=======
+
+>>>>>>> master
     private void SpawnPickup()
     {
         GameObject toSpawn = Instantiate(pickups[Random.Range(0, 2)], this.transform.position, this.transform.rotation);

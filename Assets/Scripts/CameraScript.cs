@@ -17,8 +17,12 @@ public class CameraScript : MonoBehaviour {
 
     // Ammo counter object
     AmmoCounter ammoCounter;
+<<<<<<< HEAD
 
     // Weapon Reloader object
+=======
+    PlayerList pl;
+>>>>>>> master
     WeaponReloader weaponReloader;
 
     [Range(0.1f, 1.0f)]
@@ -34,6 +38,7 @@ public class CameraScript : MonoBehaviour {
         h = GetComponent<Health>();
 
         ammoCounter = PlayerCamera.GetComponent<AmmoCounter>();
+        pl = PlayerCamera.GetComponent<PlayerList>();
         weaponReloader = GetComponent<WeaponReloader>();
     }
 	
@@ -50,6 +55,10 @@ public class CameraScript : MonoBehaviour {
     {
         lh.updateHealthBar(h.health);
         ammoCounter.updateAmmoCounter(weaponReloader);
+<<<<<<< HEAD
         
+=======
+        pl.UpdateText();
+>>>>>>> master
     }
 }
